@@ -14,17 +14,41 @@
     <title>Flip'it Mania</title>
   </head>
   <body>
-    <h1 class="title">Flip`it Mania</h1>
     <div class="container">
+
       <div class="start-overlay">
-            <h1 class="title heading">Let's Flip It!</h1>
-            <button class="start-btn">Start</button>
+        <h1 class="title heading">Flip`it</h1>
+        <h3>Select Difficulty</h3>
+        <div class="radio-box">
+          <input class="input-start" type="radio" name="difficulty" id="easy" value="easy" checked />
+          <label for="easy"> Easy </label>
+          <input class="input-start" type="radio" name="difficulty" id="medium" value="medium" />
+          <label for="medium"> Medium </label>
+          <input class="input-start" type="radio" name="difficulty" id="hard" value="hard" />
+          <label for="hard"> Hard </label>
         </div>
-        <div class="end-overlay">
-            <h1 class="congo">Congratulations!</h1>
-            <h2 class="msg"></h2>
-            <button class="restart-btn">Restart</button>
+        <button type="button" class="start-btn">Start</button>
+      </div>
+
+      <div class="end-overlay">
+        <h1 class="congo">Hurrah!</h1>
+        <h2 class="msg">You Flipped All Cards</h2>
+        <div class="score-box-end">
+          <div class="flip">
+            <h2>Flips</h2>
+            <p class="flip-value-end">0</p>
+          </div>
         </div>
+        <button type="button" class="restart-btn">Home</button>
+      </div>
+
+      <div class="score-box">
+        <div class="flip">
+          <h2>Flips</h2>
+          <p class="flip-value">0</p>
+        </div>
+      </div>
+
       <div class="game-container">
         <div class="card"></div>
         <div class="card"></div>
@@ -42,10 +66,21 @@
         <div class="card"></div>
         <div class="card"></div>
         <div class="card"></div>
+        <div class="card"></div>
+        <div class="card"></div>
+        <div class="card"></div>
+        <div class="card"></div>
+        <div class="card"></div>
+        <div class="card"></div>
+        <div class="card"></div>
+        <div class="card"></div>
       </div>
-      <button class="reset-btn">Refresh</button>
+
+      <button type="button" class="reset-btn">Refresh</button>
+
     </div>
 
     <script src="script.js"></script>
+
   </body>
 </html>
