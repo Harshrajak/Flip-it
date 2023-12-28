@@ -11,7 +11,7 @@
 body {
   width: 100%;
   height: 100vh;
-  background-color: #0a9396;
+  background-color: #008080;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -24,14 +24,12 @@ h3 {
 }
 
 .container {
-  border-radius: 10px;
   padding: 15px;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   gap: 10px;
-  overflow: hidden;
   position: relative;
 }
 
@@ -66,10 +64,7 @@ h3 {
   min-width: 300px;
   min-height: 300px;
   height: 510px;
-}
-
-.game-container.easy {
-  grid-template-columns: repeat(5, 1fr);
+  background-color: #e7ffe7;
 }
 
 .card {
@@ -93,7 +88,7 @@ h3 {
   justify-content: center;
   align-items: center;
   color: #484848;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.5);
   border-radius: 7px;
   transition: transform 0.35s linear;
   background-color: #fff;
@@ -126,7 +121,7 @@ h3 {
 .restart-btn,
 .reset-btn {
   width: 110px;
-  background-color: #c5ffc5;
+  background-color: #daffda;
   border: none;
   border-radius: 10px;
   cursor: pointer;
@@ -165,6 +160,8 @@ h3 {
   align-items: center;
   gap: 15px;
   transition: all 0.3s linear;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+  border-radius: 10px;
 }
 
 .start-overlay {
