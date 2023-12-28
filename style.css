@@ -80,7 +80,7 @@ h3 {
   position: relative;
   perspective: 1000px;
   transform-style: preserve-3d;
-  transition: scale 0.5s linear;
+  transition: scale 0.35s linear;
 }
 
 .card .back,
@@ -95,7 +95,7 @@ h3 {
   color: #484848;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
   border-radius: 7px;
-  transition: transform 0.5s linear;
+  transition: transform 0.35s linear;
   background-color: #fff;
 }
 
@@ -227,15 +227,16 @@ h3 {
 
 .score-box-end h2 {
   color: #484848;
+  font-size: 18px;
 }
 
 .score-box-end p {
   color: green;
   font-size: 18px;
+  font-weight: bold;
 }
 
-.flip-value-end{
-  color: #4e4e4e;
+.flip-value-end, .score-value-end {
   border-bottom: 2px solid #4e4e4e;
 }
 
@@ -249,7 +250,7 @@ h3 {
   color: #fff;
 }
 
-.flip-value {
+.flip-value, .score-value {
   padding: 5px 15px;
   border-radius: 15px;
   color: #ffd17b;
@@ -258,4 +259,26 @@ h3 {
   justify-content: center;
   align-items: center;
   width: 60px;
+}
+
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  20% {
+    transform: translateX(-8px);
+  }
+  40% {
+    transform: translateX(8px);
+  }
+  60% {
+    transform: translateX(-5px);
+  }
+  80% {
+    transform: translateX(5px);
+  }
+}
+
+.shake {
+  animation: shake 0.3s ease;
 }
