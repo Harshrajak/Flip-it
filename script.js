@@ -5,6 +5,7 @@ let flag = false;
 let difficultyLevel;
 let overCount = 8;
 let score = 0;
+let scoreOutOfValue = 80;
 
 const gameContainer = document.querySelector(".game-container");
 const refreshButton = document.querySelector(".reset-btn");
@@ -31,12 +32,12 @@ const checkDifficulty = () => {
 };
 
 const checkFlipCount = () => {
-  if(flipCount == 0 && hideCount != overCount) {
-    gameOver('fail');
-  } else if(flipCount == 0 && hideCount == overCount) {
-    gameOver('pass');
-  } else if(flipCount == 0 && hideCount == 0) {
+  if(flipCount === 0 && hideCount === 0) {
     gameOver('no');
+  } else if(flipCount === 0 && hideCount === overCount) {
+    gameOver('pass');
+  } else if(flipCount === 0 && hideCount !== overCount) {
+    gameOver('fail');
   }
 };
 
@@ -120,7 +121,7 @@ const hideCards = (card1, card2) => {
   
     hideCount++;
     if(hideCount === overCount) gameOver('pass');
-  
+
     setTimeout(() => {
       flipCards(card1, card2);
     }, 1500);
@@ -137,18 +138,18 @@ const showCards = () => {
 const gameOver = (status) => {
 
   flipValueEnd.textContent = `${flipValue.textContent}`;
-  scoreValueEnd.textContent = `${scoreValue.textContent}`;
+  scoreValueEnd.textContent = `${scoreValue.textContent}/${scoreOutOfValue}`;
 
   if(status === 'fail') {
-    statusHeading.style.color = 'orangered';
+    statusHeading.style.color = '#E23D28';
     statusHeading.textContent = `OOPS!`;
     statusMessage.textContent = `You Missed ${overCount - hideCount} Pairs`;
   } else if(status === 'pass') {
-    statusHeading.style.color = 'green';
+    statusHeading.style.color = '#177245';
     statusHeading.textContent = `Hurrah!`;
     statusMessage.textContent = `You Flipped All Pairs`;
   } else {
-    statusHeading.style.color = 'orangered';
+    statusHeading.style.color = '#E23D28';
     statusHeading.textContent = `Oh No!`;
     statusMessage.textContent = `You Missed All Pairs`;
   }
@@ -277,7 +278,8 @@ const createNewGrid = (difficultyLevel) => {
     }
     gameContainer.style.height = '330px';
     overCount = 8;
-    flipCount = 16;
+    flipCount = 12;
+    scoreOutOfValue = 80;
   } else if(difficultyLevel === 'medium') {
     for(var i=0; i<20; i++) {
       cards[i].innerHTML = gridContent2[i];
@@ -285,7 +287,8 @@ const createNewGrid = (difficultyLevel) => {
     }
     gameContainer.style.height = '410px';
     overCount = 10;
-    flipCount = 20;
+    flipCount = 14;
+    scoreOutOfValue = 100;
   } else {
     for(var i=0; i<24; i++) {
       cards[i].innerHTML = gridContent3[i];
@@ -293,6 +296,7 @@ const createNewGrid = (difficultyLevel) => {
     }
     gameContainer.style.height = '510px';
     overCount = 12;
-    flipCount = 24;
+    flipCount = 16;
+    scoreOutOfValue = 120;
   }
 }; createNewGrid('easy');
