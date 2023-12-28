@@ -20,11 +20,11 @@
         <h1 class="title heading">Flip`it</h1>
         <h3>Select Difficulty</h3>
         <div class="radio-box">
-          <input class="input-start" type="radio" name="difficulty" id="easy" value="easy" checked />
+          <input type="radio" name="difficulty" id="easy" value="easy" checked />
           <label for="easy"> Easy </label>
-          <input class="input-start" type="radio" name="difficulty" id="medium" value="medium" />
+          <input type="radio" name="difficulty" id="medium" value="medium" />
           <label for="medium"> Medium </label>
-          <input class="input-start" type="radio" name="difficulty" id="hard" value="hard" />
+          <input type="radio" name="difficulty" id="hard" value="hard" />
           <label for="hard"> Hard </label>
         </div>
         <button type="button" class="start-btn">Start</button>
@@ -32,20 +32,37 @@
 
       <div class="end-overlay">
         <h1 class="congo">Hurrah!</h1>
-        <h2 class="msg">You Flipped All Cards</h2>
+        <h2 class="msg">You Flipped All Pairs</h2>
         <div class="score-box-end">
           <div class="flip">
-            <h2>Flips</h2>
+            <h2>Score</h2>
+            <p class="score-value-end">0</p>
+          </div>
+          <div class="flip">
+            <h2>Spare Flips</h2>
             <p class="flip-value-end">0</p>
           </div>
         </div>
-        <button type="button" class="restart-btn">Home</button>
+        <h3>Select Difficulty</h3>
+        <div class="radio-box">
+          <input type="radio" name="difficulty" id="easy1" value="easy" />
+          <label for="easy1"> Easy </label>
+          <input type="radio" name="difficulty" id="medium1" value="medium" />
+          <label for="medium1"> Medium </label>
+          <input type="radio" name="difficulty" id="hard1" value="hard" />
+          <label for="hard1"> Hard </label>
+        </div>
+        <button type="button" class="restart-btn">Restart</button>
       </div>
 
       <div class="score-box">
         <div class="flip">
           <h2>Flips</h2>
           <p class="flip-value">0</p>
+        </div>
+        <div class="flip">
+          <h2>Score</h2>
+          <p class="score-value">0</p>
         </div>
       </div>
 
