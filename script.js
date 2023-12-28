@@ -1,9 +1,10 @@
 let firstCard, secondCard;
-let flipCount = 0;
+let flipCount = 14;
 let hideCount = 0;
 let flag = false;
 let difficultyLevel;
 let overCount = 8;
+let score = 0;
 
 const gameContainer = document.querySelector(".game-container");
 const refreshButton = document.querySelector(".reset-btn");
@@ -15,6 +16,10 @@ const cards = document.querySelectorAll(".card");
 const radios = document.querySelectorAll('input');
 const flipValue = document.querySelector('.flip-value');
 const flipValueEnd = document.querySelector('.flip-value-end');
+const scoreValue = document.querySelector('.score-value');
+const scoreValueEnd = document.querySelector('.score-value-end');
+const statusHeading = document.querySelector('.congo');
+const statusMessage = document.querySelector('.msg');
 
 const checkDifficulty = () => {
   radios.forEach((radio) => {
@@ -25,43 +30,84 @@ const checkDifficulty = () => {
   });
 };
 
+const checkFlipCount = () => {
+  if(flipCount == 0 && hideCount != overCount) {
+    gameOver('fail');
+  } else if(flipCount == 0 && hideCount == overCount) {
+    gameOver('pass');
+  } else if(flipCount == 0 && hideCount == 0) {
+    gameOver('no');
+  }
+};
+
+const shakeCards = (c1, c2) => {
+  c1.classList.add("shake");
+  c2.classList.add("shake");
+  setTimeout(() => {
+    c1.classList.remove("shake");
+    c2.classList.remove("shake");
+  }, 800);
+};
+
+const togglePointerEventsOnGameContainer = (value) => {
+  gameContainer.style.pointerEvents = `${value}`;
+};
+
+const togglePointerEventsOnCard = (card, value) => {
+  card.style.pointerEvents = `${value}`;
+};
+
 cards.forEach((card) => {
   card.addEventListener("click", (e) => {
     card.classList.add("flipped");
     if (!flag) {
       firstCard = e.target;
       flag = true;
-      flipCount++;
+      togglePointerEventsOnCard(firstCard.parentElement, 'none');
     } else {
       secondCard = e.target;
       matchPattern(firstCard, secondCard);
       flag = false;
     }
     flipValue.textContent = `${flipCount}`;
+    setTimeout(() => {
+      checkFlipCount();
+    }, 1000);
   });
 });
 
 const matchPattern = (card1, card2) => {
+  togglePointerEventsOnGameContainer('none');
   if(card1 != null && card2 != null)
   {
     if (card1.attributes.id.value === card2.attributes.id.value) {
+      score += 10;
+      scoreValue.textContent = `${score}`;
       setTimeout(() => {
         hideCards(card1, card2);
       }, 1000);
     } else {
+      flipCount--;
       setTimeout(() => {
         flipCards(card1, card2);
-      }, 1000);
+      }, 800);
     }
   }
+  setTimeout(() => {
+    togglePointerEventsOnGameContainer('all');
+    togglePointerEventsOnCard(firstCard.parentElement, 'inherit');
+  }, 1200);
 };
 
 const flipCards = (card1, card2) => {
   if(card1 != null && card2 != null) {
     let c1 = card1.parentElement;
     let c2 = card2.parentElement;
-    c1.classList.remove("flipped");
-    c2.classList.remove("flipped");
+    shakeCards(c1, c2);
+    setTimeout(() => {
+      c1.classList.remove("flipped");
+      c2.classList.remove("flipped");
+    }, 200);
   }
 };
 
@@ -73,7 +119,7 @@ const hideCards = (card1, card2) => {
     c2.style.scale = 0;
   
     hideCount++;
-    if(hideCount === overCount) gameOver();
+    if(hideCount === overCount) gameOver('pass');
   
     setTimeout(() => {
       flipCards(card1, card2);
@@ -88,9 +134,24 @@ const showCards = () => {
     });
 };
 
-const gameOver = () => {
+const gameOver = (status) => {
 
   flipValueEnd.textContent = `${flipValue.textContent}`;
+  scoreValueEnd.textContent = `${scoreValue.textContent}`;
+
+  if(status === 'fail') {
+    statusHeading.style.color = 'orangered';
+    statusHeading.textContent = `OOPS!`;
+    statusMessage.textContent = `You Missed ${overCount - hideCount} Pairs`;
+  } else if(status === 'pass') {
+    statusHeading.style.color = 'green';
+    statusHeading.textContent = `Hurrah!`;
+    statusMessage.textContent = `You Flipped All Pairs`;
+  } else {
+    statusHeading.style.color = 'orangered';
+    statusHeading.textContent = `Oh No!`;
+    statusMessage.textContent = `You Missed All Pairs`;
+  }
 
   setTimeout(() => {
     endOverlay.classList.add("show");
@@ -102,30 +163,29 @@ const gameOver = () => {
 };
 
 const restartGame = () => {
-    showCards();
-    checkDifficulty();
-    createNewGrid(difficultyLevel);
-    flipCount = 0;
-    hideCount = 0;
-    flag = false;
-    flipValue.textContent = `${flipCount}`;
+  showCards();
+  checkDifficulty();
+  createNewGrid(difficultyLevel);
+  hideCount = 0;
+  score = 0;
+  flag = false;
+  flipValue.textContent = `${flipCount}`;
+  scoreValue.textContent = `${score}`;
 };
 
 refreshButton.addEventListener('click', () => {
+    togglePointerEventsOnCard(firstCard.parentElement, 'inherit');
     restartGame();
 });
 
 startButton.addEventListener("click", () => {
   restartGame();
   startOverlay.classList.add("hide");
-  console.log(difficultyLevel);
 });
 
 restartButton.addEventListener('click', () => {
-    setTimeout(() => {
-      endOverlay.classList.remove('show');
-    }, 400);
-    startOverlay.classList.remove("hide");
+    restartGame();
+    endOverlay.classList.remove('show');
 });
 
 const toggleDisplayCard = () => {
@@ -217,6 +277,7 @@ const createNewGrid = (difficultyLevel) => {
     }
     gameContainer.style.height = '330px';
     overCount = 8;
+    flipCount = 16;
   } else if(difficultyLevel === 'medium') {
     for(var i=0; i<20; i++) {
       cards[i].innerHTML = gridContent2[i];
@@ -224,6 +285,7 @@ const createNewGrid = (difficultyLevel) => {
     }
     gameContainer.style.height = '410px';
     overCount = 10;
+    flipCount = 20;
   } else {
     for(var i=0; i<24; i++) {
       cards[i].innerHTML = gridContent3[i];
@@ -231,5 +293,6 @@ const createNewGrid = (difficultyLevel) => {
     }
     gameContainer.style.height = '510px';
     overCount = 12;
+    flipCount = 24;
   }
 }; createNewGrid('easy');
